@@ -1,6 +1,46 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "../../../../lib/mongodb";
 
+/**
+ * @swagger
+ * /api/movies/{id}/comments:
+ *   get:
+ *     summary: Retrieve comments for a movie
+ *     description: Returns a list of comments associated with a given movie ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the movie to retrieve comments for.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A list of comments associated with the movie.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     description: The name of the commenter.
+ *                   text:
+ *                     type: string
+ *                     description: The comment text.
+ *                   date:
+ *                     type: string
+ *                     format: date-time
+ *                     description: The date of the comment.
+ *       400:
+ *         description: Movie ID is required.
+ *       404:
+ *         description: No comments found for this movie.
+ *       500:
+ *         description: Server error while retrieving comments.
+ */
 export default async function handler(req: any, res: any) {
   const {
     query: { id },
