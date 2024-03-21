@@ -32,29 +32,6 @@ import clientPromise from "../../../lib/mongodb";
  *         description: Movie not found
  *       500:
  *         description: Internal server error
- *   post:
- *     tags: [Movies]
- *     summary: Add a new movie
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *               year:
- *                 type: integer
- *               genres:
- *                 type: array
- *                 items:
- *                   type: string
- *     responses:
- *       201:
- *         description: Movie added
- *       500:
- *         description: Failed to add movie
  *   delete:
  *     tags: [Movies]
  *     summary: Delete a movie by its ID
