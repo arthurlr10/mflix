@@ -5,6 +5,7 @@ import clientPromise from "../../../../lib/mongodb";
  * @swagger
  * /api/comments/{id}:
  *   get:
+ *     tags: [Comments]
  *     summary: Retrieve a comment by its ID
  *     parameters:
  *       - in: path
@@ -24,6 +25,7 @@ import clientPromise from "../../../../lib/mongodb";
  *         description: Internal server error
  * 
  *   delete:
+ *     tags: [Comments]
  *     summary: Delete a comment by its ID
  *     parameters:
  *       - in: path
@@ -43,6 +45,7 @@ import clientPromise from "../../../../lib/mongodb";
  *         description: Failed to delete comment
  * 
  *   put:
+ *     tags: [Comments]
  *     summary: Update a comment by its ID
  *     parameters:
  *       - in: path

@@ -3,8 +3,18 @@ import clientPromise from "../../../lib/mongodb";
 
 /**
  * @swagger
+ * tags:
+ *   - name: Movies
+ *     description: Everything about Movies
+ *   - name: Comments
+ *     description: Manage Comments
+ */
+
+/**
+ * @swagger
  * /api/movies/{id}:
  *   get:
+ *     tags: [Movies]
  *     summary: Retrieve a movie by its ID
  *     parameters:
  *       - in: path
@@ -23,6 +33,7 @@ import clientPromise from "../../../lib/mongodb";
  *       500:
  *         description: Internal server error
  *   post:
+ *     tags: [Movies]
  *     summary: Add a new movie
  *     requestBody:
  *       required: true
@@ -45,6 +56,7 @@ import clientPromise from "../../../lib/mongodb";
  *       500:
  *         description: Failed to add movie
  *   delete:
+ *     tags: [Movies]
  *     summary: Delete a movie by its ID
  *     parameters:
  *       - in: path
@@ -63,6 +75,7 @@ import clientPromise from "../../../lib/mongodb";
  *       500:
  *         description: Failed to delete movie
  *   put:
+ *     tags: [Movies]
  *     summary: Update a movie by its ID
  *     parameters:
  *       - in: path

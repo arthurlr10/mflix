@@ -5,6 +5,7 @@ import clientPromise from "../../../../lib/mongodb";
  * @swagger
  * /api/movies/{id}/comments:
  *   get:
+ *     tags: [Comments]
  *     description: Retrieves comments for a specified movie by ID
  *     parameters:
  *       - in: path
@@ -23,6 +24,7 @@ import clientPromise from "../../../../lib/mongodb";
  *       500:
  *         description: Server error while retrieving comments
  *   post:
+ *     tags: [Comments]
  *     description: Posts a new comment for a specified movie by ID
  *     parameters:
  *       - in: path

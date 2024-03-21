@@ -6,6 +6,7 @@ import { ObjectId } from "mongodb";
   * @swagger
   * /api/movies:
   *   get:
+  *     tags: [Movies]
   *     description: Returns movies
   *     responses:
   *       200:
