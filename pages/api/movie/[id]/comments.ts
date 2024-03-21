@@ -5,41 +5,55 @@ import clientPromise from "../../../../lib/mongodb";
  * @swagger
  * /api/movies/{id}/comments:
  *   get:
- *     summary: Retrieve comments for a movie
- *     description: Returns a list of comments associated with a given movie ID.
+ *     description: Retrieves comments for a specified movie by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: MongoDB ID of the movie to retrieve comments for.
+ *         description: The ID of the movie to retrieve comments for
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: A list of comments associated with the movie.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   name:
- *                     type: string
- *                     description: The name of the commenter.
- *                   text:
- *                     type: string
- *                     description: The comment text.
- *                   date:
- *                     type: string
- *                     format: date-time
- *                     description: The date of the comment.
+ *         description: A list of comments for the movie
  *       400:
- *         description: Movie ID is required.
+ *         description: Movie ID is required
  *       404:
- *         description: No comments found for this movie.
+ *         description: No comments found for this movie
  *       500:
- *         description: Server error while retrieving comments.
+ *         description: Server error while retrieving comments
+ *   post:
+ *     description: Posts a new comment for a specified movie by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the movie to post a comment for
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the person posting the comment
+ *               text:
+ *                 type: string
+ *                 description: The comment text
+ *             required:
+ *               - name
+ *               - text
+ *     responses:
+ *       201:
+ *         description: Comment added
+ *       400:
+ *         description: Movie ID is required for posting a comment
+ *       500:
+ *         description: Failed to add comment
  */
 export default async function handler(req: any, res: any) {
   const {
@@ -72,8 +86,35 @@ export default async function handler(req: any, res: any) {
         });
       }
       break;
+      case "POST":
+        if (!id) {
+          return res.status(400).json({ error: "Movie ID is required for posting a comment." });
+        }
+    
+        const newComment = {
+          ...req.body,
+          movie_id: new ObjectId(id),
+          date: new Date()
+        };
+      
+        try {
+          const result = await db.collection("comments").insertOne(newComment);
+          return res
+            .status(201)
+            .json({ status: 201, message: "Comment added", data: result });
+        } catch (error) {
+          return res.status(500).json({
+            status: 500,
+            message: "Failed to add comment",
+          });
+        }
+      
     default:
       res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Méthode ${req.method} non autorisée`);
   }
 }
+
+
+
+//post

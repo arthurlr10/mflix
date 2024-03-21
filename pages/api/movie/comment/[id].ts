@@ -1,6 +1,80 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "../../../../lib/mongodb";
 
+/**
+ * @swagger
+ * /api/comments/{id}:
+ *   get:
+ *     summary: Retrieve a comment by its ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The comment ID
+ *     responses:
+ *       200:
+ *         description: Comment found and returned
+ *       400:
+ *         description: Comment ID is required
+ *       404:
+ *         description: Comment not found
+ *       500:
+ *         description: Internal server error
+ * 
+ *   delete:
+ *     summary: Delete a comment by its ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The comment ID
+ *     responses:
+ *       200:
+ *         description: Comment successfully deleted
+ *       400:
+ *         description: Comment ID is required
+ *       404:
+ *         description: Comment not found
+ *       500:
+ *         description: Failed to delete comment
+ * 
+ *   put:
+ *     summary: Update a comment by its ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The comment ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *                 description: The updated comment text
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: The updated date of the comment
+ *     responses:
+ *       200:
+ *         description: Comment successfully updated
+ *       400:
+ *         description: Comment ID is required for update
+ *       404:
+ *         description: Comment not found or no changes made
+ *       500:
+ *         description: Failed to update comment
+ */
 export default async function handler(req: any, res: any) {
   const client = await clientPromise;
   const db = client.db("sample_mflix");
@@ -30,21 +104,6 @@ export default async function handler(req: any, res: any) {
           .status(500)
           .json({ status: 500, message: "Internal server error" });
       }
-
-    case "POST":
-      const newComment = req.body;
-      try {
-        const result = await db.collection("comments").insertOne(newComment);
-        return res
-          .status(201)
-          .json({ status: 201, message: "Comment added", data: result });
-      } catch (error) {
-        return res.status(500).json({
-          status: 500,
-          message: "Failed to add comment",
-        });
-      }
-
     case "DELETE":
       if (!id) {
         return res
