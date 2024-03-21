@@ -1,6 +1,6 @@
 # Titre du Projet
 
-Une courte description de ce que fait votre projet.
+J'ai fais un front avec antd qui affiche les films.
 
 ## Prérequis
 
